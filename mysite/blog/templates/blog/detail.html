@@ -1,0 +1,48 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>User Profile</title>
+{% endblock %}
+
+{% block body %}
+
+    <h1>User Profile<img alt="Profile Pic" align="right" class="dp" src = '{{ user.userprofile.profile_image.url }}' height="168" width="168" /></h1>
+    <p>Username: {{ user }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p><br>
+    {% if user.is_authenticated %}
+        <a href="{% url 'blog:follow' user.id %}"><button>Follow</button></a>&nbsp
+        <a href="{% url 'blog:unfollow' user.id %}"><button>Unfollow</button></a>&nbsp
+        <a href="{% url 'blog:subscribe' user.id %}"><button>Subscribe</button></a>&nbsp
+        <a href="{% url 'blog:unsubscribe' user.id %}"><button>Unsubscribe</button></a>&nbsp
+    {% endif %}
+
+    <h3 align ='right'>Followers:</h3>
+    {% if followers %}
+            {% for user in followers %}
+                <li align = "right"><a href={% url 'blog:detail' user.id%} > {{ user.username }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+            {% endfor %}
+    {% else %}
+        <h4 align="right">No Followers!</h4>
+    {% endif %}
+    <h3 align="right">Following:</h3>
+    {% if follow_list %}
+            {% for user in follow_list %}
+                <li align="right"><a href={% url 'blog:detail' user.id%} > {{ user.username }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+            {% endfor %}
+    {% else %}
+        <h4 align="right">No users following!</h4>
+    {% endif %}
+    <h2>List of all Blogs:</h2>
+    {% if user.blog_set.all %}
+        <ul>
+        {% for blog in user.blog_set.all %}
+            <li> <a href = {% url 'blog:blog-detail' blog.id %} >{{ blog.blog_title }}</a> </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No Blogs Available!</strong> <br><br>
+    {% endif %}
+
+{% endblock %}

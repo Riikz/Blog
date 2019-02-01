@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>Blog Detail</title>
+{% endblock %}
+
+{% block body %}
+
+
+        <h1>{{ blog.blog_title }} <sub class="sub_detail_wala"> &nbsp&nbsp by  &nbsp &nbsp{{ blog.author }}</sub></h1>
+        <small> {{ blog.pub_date }}</small>
+        <br><br>
+        <p class="blog_body">{{ blog.blog_body }}</p>
+        <br><br>
+    {% if user.is_authenticated %}
+        <form action="{% url 'blog:edit_blog' blog.id %}" method="get">
+            <input type="submit" value="Edit Blog!">
+        </form><br>
+    <form action="{% url 'blog:delete_blog' blog.id %}" method="get">
+            <input type="submit" value="Delete Blog!">
+        </form><br>
+    <form action="{% url 'blog:comment' blog.id %}" method="get">
+        <input type="submit" value="Leave A Comment!">
+    </form>
+    {% endif %}
+
+
+        <h2>&nbsp&nbsp&nbsp Comments!</h2>
+    <ol>
+    {% for comment in blog.comment_set.all %}
+            <li><p>{{ comment }}</p> <small> by  &nbsp&nbsp {{ comment.author }}  &nbsp&nbsp on   &nbsp&nbsp{{comment.pub_date }}</small></li>
+    {% endfor %}
+    </ol>
+            <br><br>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>Edit Profile</title>
+{% endblock %}
+
+{% block body %}
+<h2><b>Edit Profile</b></h2>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form1.as_p }}
+        <input type="submit" value="Edit">
+    </form><br><br><br><br>
+{% endblock %}

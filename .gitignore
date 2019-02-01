@@ -1,0 +1,8 @@
+
+*.xlsx
+
+mysite.settings.SECRET_KEY
+mysite.settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
+mysite.settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+mysite.settings.SEND_GRID_API_KEY
+mysite.settings.EMAIL_HOST_PASSWORD

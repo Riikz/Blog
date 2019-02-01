@@ -1,0 +1,10 @@
+Greetings from English Press Club,
+
+The user {{ author }} has written a new post: {{ title }}
+
+Come to English Press Club, to check it out!
+
+
+
+NOTE:
+    You are receiving this email because you have subscribed {{ author }}.

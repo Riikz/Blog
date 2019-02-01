@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Login!</h1>
+
+    <form action="{% url 'accounts:login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}<br>
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <input type="submit" value="Login">
+    </form><br>
+
+    <p><strong>---OR---</strong></p><br>
+
+    <a href = "{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br><br>
+
+{% endblock %}

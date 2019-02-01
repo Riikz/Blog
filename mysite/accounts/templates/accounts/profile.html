@@ -1,0 +1,30 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Profile!<img align="right" class="dp" alt="Profile Pic" src = '{{ user.userprofile.profile_image.url }}' height="168" width="168" />&nbsp&nbsp</h1>
+    <p>Username: {{ user }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p>
+
+    <h3 align ='right'>Followers:</h3>
+    {% if followers %}
+            {% for user in followers %}
+                <li align = "right"><a href={% url 'blog:detail' user.id%} > {{ user.username }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+            {% endfor %}
+    {% else %}
+        <h4 align="right">No Followers!</h4>
+    {% endif %}
+    <h3 align="right">Following:</h3>
+    {% if follow_list %}
+            {% for user in follow_list %}
+                <li align="right"><a href={% url 'blog:detail' user.id%} > {{ user.username }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+            {% endfor %}
+    {% else %}
+        <h4 align="right">No users following!</h4>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>EPC</title>
+{% endblock %}
+
+{% block body %}
+
+    {% if error_message %}
+    <h1><strong>{{ error_message }}</strong></h1><br>
+    {% else %}
+        {% if user.is_authenticated %}
+            <h2>Welcome, {{ user.username }}. Thanks for logging in.</h2>
+        {% if user.is_staff %}
+            <h2><strong>ADMIN ACCESS</strong></h2>
+            <a href="{% url 'blog:generate' %}"><button>Generate Detailed Report</button></a>&nbsp
+        {% endif %}
+        {% else %}
+            <h2>Welcome to English Press Club!</h2>
+        {% endif %}﻿
+        <h3 align = "right">List of all users:</h3>
+        {% if latest_user_list %}
+            {% for user in latest_user_list %}
+                <li class="user" align="right"><a href = {% url 'blog:detail' user.id %}>{{ user.username }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </a></li>
+            {% endfor %}
+        {% else %}
+            <h4 align="right">No Users are Available.</h4>
+        {% endif %}
+        {% if user.is_authenticated %}
+            {% if follow_user_list %}
+                <h3>Posts from Followed Users:</h3>
+                {% for user in follow_user_list %}
+                    {% for blog in user.blog_set.all %}
+                        <li align = "justify"> <a href = {% url 'blog:blog-detail' blog.id %} >{{ blog.blog_title }}</li></a>
+                            <small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspby {{ blog.author }} on {{blog.pub_date }} </small>
+                    {% empty %}
+                        <strong>No posts from Followed Users</strong>
+                    {% endfor %}
+                {% endfor %}
+                <h3>Other Posts:</h3>
+            {% else %}
+                <h3>Recent Posts!</h3>
+            {% endif %}
+        {% else %}
+            <h3>All Blogs!</h3>
+        {% endif %}
+            {% if user.is_authenticated %}
+                {% for user in latest_user_list1 %}
+                    {% for blog in user.blog_set.all %}
+                        <li align = "justify"> <a href = {% url 'blog:blog-detail' blog.id %} >{{ blog.blog_title }}</li></a>
+                        <small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspby {{ blog.author }} on {{blog.pub_date }} </small>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                {% for user in latest_user_list %}
+                    {% for blog in user.blog_set.all %}
+                        <li align = "justify"> <a href = {% url 'blog:blog-detail' blog.id %} >{{ blog.blog_title }}</li></a>
+                        <small> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspby {{ blog.author }} on {{blog.pub_date }} </small>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+    {% endif %}
+{% endblock %}

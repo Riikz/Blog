@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block body %}
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/style2.css' %}" />
+
+     {% if user.is_authenticated %}
+ <h2>Welcome, {{ user.username }}. Thanks for logging in.</h2>
+    {% endif %}﻿
+    <h3 align = "right">Here are the list of all users:                  </h3>
+    {% if latest_user_list %}
+        {% for user in latest_user_list %}
+            <li align="right"><a href = {% url 'blog:detail' user.id %}>{{ user.username }} </a></li>
+        {% endfor %}
+    {% else %}
+        <p>No Users are Available.</p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <h2>News Feed</h2>
+    {% else %}
+        <h2>All Blogs!</h2>
+    {% endif %}
+    {% for user in latest_user_list %}
+        {% for blog in user.blog_set.all %}
+            <li align = "justify"> <a href = {% url 'blog:blog-detail' blog.id %} >{{ blog.blog_title }}  ----   {{ blog.author }} <img src="{% static "blog/images/star.png" %}" alt="Like"/></li></a>
+        {% endfor %}
+
+    {% endfor %}
+{% endblock %}

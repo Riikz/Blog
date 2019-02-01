@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+<title>Add Comment</title>
+{% endblock %}
+
+{% block body %}
+    <h2>Adding a Comment for Blog: {{blog.blog_title}}</h2>
+    <form action="{% url 'blog:comment' blog.id %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Create">
+    </form>
+
+{% endblock %}
